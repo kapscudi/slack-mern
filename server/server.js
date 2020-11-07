@@ -29,20 +29,19 @@ mongoose.connect(mongoURI, {
   useUnifiedTopology: true,
 });
 
-// prettier-ignore
 mongoose.connection.once('open', () => {
   console.log('DB Connected');
 
-  const changeStream = mongoose.connection.collection('conversation').watch();
+  const changeStream = mongoose.connection.collection('conversations').watch();
 
   changeStream.on('change', (change) => {
     if (change.operationType === 'insert') {
       pusher.trigger('channels', 'newChannel', {
-        'change': change,
+        change: change,
       });
     } else if (change.operationType === 'update') {
       pusher.trigger('conversation', 'newMessage', {
-        'change': change,
+        change: change,
       });
     } else {
       console.log('Error triggering Pusher');
