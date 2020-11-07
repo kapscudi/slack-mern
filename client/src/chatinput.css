@@ -18,5 +18,8 @@
 }
 
 .chatinput > form > button {
-  display: none !important;
+  height: 0;
+  width: 0;
+  border: none;
+  background-color: transparent;
 }
